@@ -107,7 +107,7 @@ func ParseCity(data io.Reader) (City, error) {
 
 func ParseTerrain(data io.Reader) (*Terrain, error) {
 	terrain := &Terrain{}
-	for i := 0; i < 48; i++ {
+	for range 48 {
 		city, err := ParseCity(data)
 		if err != nil {
 			return nil, err
@@ -137,7 +137,7 @@ func (c *Cities) ReadOwnerAndVictoryPoints(data io.Reader) error {
 	if numCities != len(*c) {
 		return fmt.Errorf("mismatched number of cities, %d vs %d", numCities, len(*c))
 	}
-	for i := 0; i < numCities; i++ {
+	for i := range numCities {
 		if _, err := io.ReadFull(data, buf[:]); err != nil {
 			return err
 		}

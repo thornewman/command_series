@@ -24,7 +24,7 @@ func TestParseEncodeParseUnits(t *testing.T) {
 		t.Fatalf("Unread %d bytes remained in the encoded units buffer", buf.Len())
 	}
 	if !reflect.DeepEqual(scenarioData.Units, units) {
-		for side := 0; side < 2; side++ {
+		for side := range 2 {
 			if len(scenarioData.Units[side]) != len(units[side]) {
 				t.Fatalf("Different number of units for side %d, %d vs %d", side, len(scenarioData.Units[side]), len(units[side]))
 			}

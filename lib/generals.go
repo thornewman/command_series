@@ -56,7 +56,7 @@ func coefficientFromTwoBits(data byte, pos0, pos1 int) int {
 
 func ParseGenerals(data io.Reader) (*Generals, error) {
 	var generals Generals
-	for i := 0; i < 16; i++ {
+	for i := range 16 {
 		var general General
 		var generalData [4]byte
 		_, err := io.ReadFull(data, generalData[:])
@@ -74,7 +74,9 @@ func ParseGenerals(data io.Reader) (*Generals, error) {
 		general.Data2High = int(int8(generalData[2]&240)) / 16
 		general.Movement = int(generalData[3] & 15)
 		generalName := make([]byte, 12)
-		io.ReadFull(data, generalName)
+		if _, err := io.ReadFull(data, generalName); err != nil {
+			return nil, err
+		}
 		for len(generalName) > 0 && generalName[len(generalName)-1] == 0 {
 			generalName = generalName[0 : len(generalName)-1]
 		}

@@ -1,8 +1,8 @@
 module github.com/pwiecz/command_series
 
-go 1.23.0
+go 1.26
 
-toolchain go1.24.0
+toolchain go1.26.0
 
 require (
 	github.com/ebitengine/oto/v3 v3.3.2

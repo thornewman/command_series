@@ -64,7 +64,7 @@ func (a *atrFSDirFile) Size() int64                { return 0 }
 func (a *atrFSDirFile) Mode() fs.FileMode          { return fs.ModeDir | 0555 }
 func (a *atrFSDirFile) ModTime() time.Time         { return time.Time{} }
 func (a *atrFSDirFile) IsDir() bool                { return true }
-func (a *atrFSDirFile) Sys() interface{}           { return nil }
+func (a *atrFSDirFile) Sys() any                   { return nil }
 func (a *atrFSDirFile) ReadDir(n int) ([]fs.DirEntry, error) {
 	ret := []fs.DirEntry{}
 	if n <= 0 {
@@ -73,7 +73,7 @@ func (a *atrFSDirFile) ReadDir(n int) ([]fs.DirEntry, error) {
 			a.position++
 		}
 	} else {
-		for i := 0; i < n; i++ {
+		for i := range n {
 			if a.position >= len(a.files) {
 				return ret, io.EOF
 			}
@@ -160,7 +160,7 @@ func (a *atrFileInfo) Mode() fs.FileMode          { return fs.FileMode(0444) }
 func (a *atrFileInfo) Info() (fs.FileInfo, error) { return a, nil }
 func (a *atrFileInfo) Size() int64                { return int64(a.size) }
 func (a *atrFileInfo) ModTime() time.Time         { return time.Time{} }
-func (a *atrFileInfo) Sys() interface{}           { return nil }
+func (a *atrFileInfo) Sys() any                   { return nil }
 
 const (
 	DELETED = 0x80

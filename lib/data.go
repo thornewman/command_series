@@ -133,7 +133,7 @@ func ParseData(data []byte) (*Data, error) {
 	for i, limit := range data[432:448] {
 		scenario.TankCountLimit[i] = int(limit)
 	}
-	for i := 0; i < 21; i++ {
+	for i := range 21 {
 		scenario.DataUpdates[i].Day = int(data[448+i*3])
 		scenario.DataUpdates[i].Offset = int(data[448+1+i*3])
 		scenario.DataUpdates[i].Value = data[448+2+i*3]
@@ -144,14 +144,14 @@ func ParseData(data []byte) (*Data, error) {
 	// Also offsets count from the start of the header, so subtract the header size
 	// (32 bytes)
 	stringListOffsets := make([]int, 16)
-	for i := 0; i < 16; i++ {
+	for i := range 16 {
 		var offset [2]byte
 		if _, err := io.ReadFull(reader, offset[:]); err != nil {
 			return scenario, err
 		}
 		stringListOffsets[i] = int(offset[0]) + 256*int(offset[1]) - 32
 	}
-	for i := 0; i < 14; i++ {
+	for i := range 14 {
 		if stringListOffsets[i+1] < stringListOffsets[i] {
 			return scenario, fmt.Errorf("invalid scenario file. Non-monotonic string offsets num %d, %d (%d, %d)", i, i+1, stringListOffsets[i], stringListOffsets[i+1])
 		}
@@ -335,7 +335,7 @@ func (d *Data) ReadFirst255Bytes(reader io.Reader) error {
 
 func (d *Data) WriteFirst255Bytes(writer io.Writer) error {
 	var data [255]byte
-	for i := 0; i < 16; i++ {
+	for i := range 16 {
 		data[i] = byte(d.Data0Low[i])&15 + (byte(d.Data0High[i]) << 4)
 		data[16+i] = byte(d.Data16Low[i])&15 + (byte(d.Data16High[i]) << 4)
 		data[32+i] = byte(d.Data32[i])
@@ -344,7 +344,7 @@ func (d *Data) WriteFirst255Bytes(writer io.Writer) error {
 		data[80+i] = byte(d.UnitMask[i])
 		data[200+i] = byte(d.Data200Low[i] + d.UnitResupplyPerType[i]*2)
 	}
-	for i := 0; i < 8; i++ {
+	for i := range 8 {
 		data[96+i] = byte(d.TerrainMenAttack[i])
 		data[104+i] = byte(d.TerrainTankAttack[i])
 		data[112+i] = byte(d.TerrainMenDefence[i])
@@ -370,17 +370,17 @@ func (d *Data) WriteFirst255Bytes(writer io.Writer) error {
 	data[173] = byte(d.Data173)
 	data[174] = byte(d.Data174)
 	data[175] = byte(d.Data175)
-	for order := 0; order < 4; order++ {
-		for i := 0; i < 4; i++ {
+	for order := range 4 {
+		for i := range 4 {
 			data[176+order*4+i] = byte(d.Data176[order][i])
 		}
 	}
-	for dir := 0; dir <= 1; dir++ {
-		for formation := 0; formation < 8; formation++ {
+	for dir := range 2 {
+		for formation := range 8 {
 			data[216+dir*8+formation] = byte(d.FormationChangeSpeed[dir][formation])
 		}
 	}
-	for i := 0; i < 2; i++ {
+	for i := range 2 {
 		data[232+i] = byte(d.ResupplyRate[i])
 		data[234+i] = byte(d.MenReplacementRate[i])
 		data[236+i] = byte(d.TankReplacementRate[i])

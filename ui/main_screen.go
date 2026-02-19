@@ -519,15 +519,16 @@ func (s *MainScreen) pickOrder(xy lib.UnitCoords) {
 }
 func (s *MainScreen) orderPicked(command string, unit lib.Unit) {
 	s.listBox = nil
-	if command == "MOVE" {
+	switch command {
+	case "MOVE":
 		s.giveOrder(unit, lib.Move)
-	} else if command == "ATTACK" {
+	case "ATTACK":
 		s.giveOrder(unit, lib.Attack)
-	} else if command == "DEFEND" {
+	case "DEFEND":
 		s.giveOrder(unit, lib.Defend)
-	} else if command == "RESERVE" {
+	case "RESERVE":
 		s.giveOrder(unit, lib.Reserve)
-	} else {
+	default:
 		return
 	}
 	s.orderedUnit = &unit
@@ -808,10 +809,7 @@ func (s *MainScreen) loadGame() {
 	}
 	s.messageBox.Print("(PRESS ESCAPE TO CANCEL)", 2, 1)
 	s.messageBox.Print("LOAD SCENARIO NAME: ?", 2, 2)
-	listLen := len(saveNames)
-	if listLen > 8 {
-		listLen = 8
-	}
+	listLen := min(len(saveNames), 8)
 	s.listBox = NewListBox(23*8., 22+2*8, 8, listLen, saveNames, s.gameData.Sprites.GameFont, func(filename string) { s.loadGameFromFile(filename) })
 	playerBaseColor := s.scenarioData.Data.SideColor[s.playerSide] * 16
 	s.listBox.SetTextColor(playerBaseColor)

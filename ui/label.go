@@ -31,7 +31,7 @@ func NewLabel(text string, x, y float64, width, height int, font *lib.Font) *Lab
 		dirty:           true,
 		cells:           make([]labelCell, numCells),
 		targetCells:     make([]labelCell, numCells)}
-	for x := 0; x < numCells; x++ {
+	for x := range numCells {
 		l.targetCells[x].rune = ' '
 	}
 	l.SetText(text, 0)

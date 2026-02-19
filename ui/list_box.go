@@ -24,13 +24,13 @@ func NewListBox(x, y float64, width, height int, items []string, font *lib.Font,
 		items:   items,
 		onEnter: onEnter}
 	fontSize := font.Size()
-	for i := 0; i < height; i++ {
+	for i := range height {
 		l.rows = append(l.rows, NewLabel(items[i], x, y+float64(fontSize.Y*i), width*fontSize.X, fontSize.Y, font))
 	}
 	if len(items) == 0 || height == 0 {
 		return l
 	}
-	for i := 0; i < width; i++ {
+	for i := range width {
 		l.rows[0].SetCharInverted(i, true)
 	}
 	return l

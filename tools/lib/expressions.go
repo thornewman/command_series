@@ -583,7 +583,7 @@ type LoadUnitStmt struct {
 }
 
 func (l LoadUnitStmt) AffectsExpressionValue(e Expression, stack []Expression) bool {
-	for i := 0; i < 16; i++ {
+	for i := range 16 {
 		if e.ReadsFromVariable(byte(int(l.v) + 17 + i)) {
 			return true
 		}

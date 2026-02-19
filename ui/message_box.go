@@ -15,7 +15,7 @@ func NewMessageBox(x, y float64, width, height int, font *lib.Font) *MessageBox 
 	b := &MessageBox{}
 	fontSize := font.Size()
 	numRows := (height + fontSize.Y - 1) / fontSize.Y
-	for i := 0; i < numRows; i++ {
+	for i := range numRows {
 		b.rows = append(b.rows, NewLabel("", x, y+float64(fontSize.Y*i), width, fontSize.Y, font))
 	}
 	return b
@@ -44,7 +44,7 @@ func (b *MessageBox) ClearRow(y int) {
 	b.rows[y].Clear()
 }
 func (b *MessageBox) Print(str string, x, y int) {
-	for _, line := range strings.Split(str, "\n") {
+	for line := range strings.SplitSeq(str, "\n") {
 		if y >= len(b.rows) {
 			return
 		}

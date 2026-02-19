@@ -188,9 +188,10 @@ func generateHexTilingOffsets() []offsetWithAngle {
 			var angle float64
 			// Slightly different order of hexes further away and those closer
 			// to keep it faithful to the original ordering.
-			if distance == 2 {
+			switch distance {
+			case 2:
 				angle = math.Atan2(-float64(dx), float64(dy))
-			} else if distance == 1 {
+			case 1:
 				angle = math.Atan2(float64(dx), -float64(dy))
 			}
 			offsets = append(offsets, offsetWithAngle{dx, dy, angle})

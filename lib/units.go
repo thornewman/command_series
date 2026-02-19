@@ -250,7 +250,7 @@ func ParseUnit(data [16]byte, unitTypeNames []string, unitNames []string, genera
 
 func ParseUnits(data io.Reader, unitTypeNames []string, unitNames [2][]string, generals *Generals) (*Units, error) {
 	var units Units
-	for i := 0; i < 128; i++ {
+	for i := range 128 {
 		var unitData [16]byte
 		numRead, _ := io.ReadFull(data, unitData[:])
 		if numRead < 16 {
