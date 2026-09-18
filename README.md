@@ -8,7 +8,7 @@ Obtain an ATR image of Atari version of one of the games and run `$ command_seri
 
 ## Audio
 
-This fork of [pwiecz/command_series](https://github.com/pwiecz/command_series) adds sound effects to the original engine:
+Adds sound effects to the original engine:
 
 - Unit movement: `audio/assets/engine.mp3`.
 - Normal attacks: `audio/assets/gunfire.mp3`.
